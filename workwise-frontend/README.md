@@ -41,6 +41,4 @@ The frontend of Workwise is built with **Angular**, providing a dynamic and secu
 
 Both guards rely on an `AuthService` method to decode the JWT token and extract the role.
 
----
 
-For detailed usage and development guidelines, please see the [workwise-frontend README](./workwise-frontend/README.md).
