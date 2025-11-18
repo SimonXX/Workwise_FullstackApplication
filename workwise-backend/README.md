@@ -1,7 +1,3 @@
-Absolutely! Here's a polished **README** section for your backend, emphasizing the robust security features you implemented with Spring Security and JWT, written in clear professional English:
-
----
-
 # Workwise Backend
 
 The backend of Workwise is a secure, scalable REST API built with **Spring Boot**. It implements advanced security features to ensure safe and controlled access to the application, leveraging **Spring Security** and **JWT (JSON Web Tokens)** for authentication and authorization.
@@ -37,5 +33,6 @@ The backend of Workwise is a secure, scalable REST API built with **Spring Boot*
 ## Quick Start
 
 The backend exposes REST APIs for user registration, authentication, job offers, applications, notifications, companies, and users, all secured via JWT tokens and role checks.
+
 ---
 
