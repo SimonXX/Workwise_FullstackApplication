@@ -1,6 +1,8 @@
 
 # Workwise
 
+https://github.com/user-attachments/assets/6883e31e-6796-406f-b814-768b73049c4e
+
 **LinkedIn-like platform built with Angular and Spring Boot**
 
 ---
