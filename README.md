@@ -41,7 +41,7 @@ The frontend will be accessible at: [http://localhost:4200](http://localhost:420
 
 ---
 
-For development and testing purposes, the database password is exposed in the configuration to simplify the database setup and container initializati: *Remember to change it to a strong password before deploying to production*.
+For development and testing purposes, the database password is exposed in the configuration to simplify the database setup and container initializati: *Remember to change it to a strong password*.
 
 ## Additional Information
 
