@@ -41,3 +41,8 @@ The frontend will be accessible at: [http://localhost:4200](http://localhost:420
 
 ---
 
+Additional Information
+
+For further details about the frontend, please visit the workwise-frontend README
+For more information about the backend, see the workwise-backend README
+
