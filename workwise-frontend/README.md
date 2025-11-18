@@ -1,27 +1,46 @@
-# WorkwiseFrontend
+# Workwise Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+The frontend of Workwise is built with **Angular**, providing a dynamic and secure single-page application (SPA) experience. It implements role-based route protection to ensure only authorized users can access specific areas of the app.
 
-## Development server
+## Routing and Security
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* **Role-Based Route Guards:**
+  Routes are protected using Angular `CanActivate` guards (`candidateGuard` and `companyGuard`) that verify the user’s role extracted from a JWT token stored in localStorage. This ensures that candidates and companies can only access their respective secured areas.
 
-## Code scaffolding
+* **Defined Routes:**
+  The application includes routes for:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  * Public pages: Home, Login, Candidate registration, Company registration.
+  * Secured areas: Candidate Area (protected by `candidateGuard`), Company Area and Company Profile (protected by `companyGuard`).
+  * Shared routes like Job Offers and Candidate Profile, with flexible access control.
 
-## Build
+* **Lazy and Modular Routing:**
+  The routes are structured modularly using Angular's `RouterModule` for scalability and maintainability.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Example Routes
 
-## Running unit tests
+| Path                       | Component                  | Guard             | Description                 |
+| -------------------------- | -------------------------- | ----------------- | --------------------------- |
+| `/`                        | HomeComponent              | None              | Public landing page         |
+| `/login`                   | LoginComponent             | None              | User login page             |
+| `/register-as-a-candidate` | RegisterCandidateComponent | None              | Candidate registration      |
+| `/register-as-a-company`   | RegisterCompanyComponent   | None              | Company registration        |
+| `/candidateArea`           | CandidateAreaComponent     | candidateGuard    | Secured candidate dashboard |
+| `/companyArea`             | CompanyAreaComponent       | companyGuard      | Secured company dashboard   |
+| `/jobOffers`               | JobOffersComponent         | None              | Public job offers listing   |
+| `/profile`                 | CandidateProfileComponent  | (optional guards) | Candidate profile           |
+| `/profileCompany`          | CompanyProfileComponent    | companyGuard      | Company profile             |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Guards Logic
 
-## Running end-to-end tests
+* **CandidateGuard:**
+  Checks if the logged-in user’s role is `"CANDIDATE"`. If not, redirects to `/login`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+* **CompanyGuard:**
+  Checks if the logged-in user’s role is `"COMPANY"`. If not, redirects to `/login`.
 
-## Further help
+Both guards rely on an `AuthService` method to decode the JWT token and extract the role.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+For detailed usage and development guidelines, please see the [workwise-frontend README](./workwise-frontend/README.md).
