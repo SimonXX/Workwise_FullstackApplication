@@ -1,0 +1,40 @@
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-title-icon {
+  color: var(--ww-blue);
+}
+
+.dialog-content {
+  padding-top: 8px;
+}
+
+.current-status {
+  font-size: 14px;
+  color: var(--ww-text-secondary);
+  margin-bottom: 16px;
+}
+
+.status-field {
+  width: 100%;
+}
+
+.dialog-actions {
+  padding-top: 8px;
+}
+
+.dialog-cancel {
+  color: var(--ww-text-muted) !important;
+}
+
+.dialog-save {
+  background-color: var(--ww-blue) !important;
+  color: var(--ww-white) !important;
+  border-radius: 24px !important;
+}

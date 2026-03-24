@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {MatFormField, MatSuffix} from "@angular/material/form-field";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
@@ -26,7 +26,8 @@ import {MatInput} from "@angular/material/input";
     MatDialogActions,
     MatButton,
     MatInput,
-    MatSuffix
+    MatSuffix,
+    MatLabel
   ],
   templateUrl: './add-job-offer-dialog.component.html',
   styleUrl: './add-job-offer-dialog.component.css'

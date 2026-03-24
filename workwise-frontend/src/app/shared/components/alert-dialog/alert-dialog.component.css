@@ -1,0 +1,35 @@
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-success-icon {
+  color: var(--ww-green);
+  font-size: 20px;
+}
+
+.dialog-error-icon {
+  color: var(--ww-orange);
+  font-size: 20px;
+}
+
+.dialog-content p {
+  font-size: 14px;
+  color: var(--ww-text-secondary);
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+.dialog-actions {
+  padding-top: 8px;
+}
+
+.dialog-ok-btn {
+  background-color: var(--ww-blue) !important;
+  color: var(--ww-white) !important;
+  border-radius: 24px !important;
+}

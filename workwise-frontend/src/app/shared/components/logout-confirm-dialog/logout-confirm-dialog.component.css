@@ -1,0 +1,31 @@
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-title-icon {
+  color: var(--ww-red);
+}
+
+.dialog-content p {
+  font-size: 14px;
+  color: var(--ww-text-secondary);
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+.dialog-actions {
+  padding-top: 8px;
+}
+
+.dialog-cancel {
+  color: var(--ww-text-muted) !important;
+}
+
+.dialog-logout {
+  border-radius: 24px !important;
+}

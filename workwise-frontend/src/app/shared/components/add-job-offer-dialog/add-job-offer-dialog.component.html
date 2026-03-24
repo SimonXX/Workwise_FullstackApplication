@@ -1,25 +1,30 @@
-<h1 mat-dialog-title>{{ dialogTitle }}</h1>
-<div mat-dialog-content>
+<h2 mat-dialog-title class="dialog-title">
+  <i class="fas fa-briefcase dialog-title-icon"></i>
+  {{ dialogTitle }}
+</h2>
+<div mat-dialog-content class="dialog-content">
   <form [formGroup]="form">
-    <mat-form-field>
-      <input matInput placeholder="Title" formControlName="title">
+    <mat-form-field appearance="outline" class="dialog-field">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Job title" formControlName="title">
     </mat-form-field>
-    <mat-form-field>
-      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    <mat-form-field appearance="outline" class="dialog-field">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Job description" formControlName="description" rows="3"></textarea>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline" class="dialog-field">
+      <mat-label>Location</mat-label>
       <input matInput placeholder="Location" formControlName="location">
     </mat-form-field>
-    <mat-form-field>
-      <div class="date-picker-container">
-        <input matInput [matDatepicker]="datepicker" id="expirydate" formControlName="expirydate" class="form-control" placeholder="Expiry date" readonly>
-        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker></mat-datepicker>
-      </div>
+    <mat-form-field appearance="outline" class="dialog-field">
+      <mat-label>Expiry date</mat-label>
+      <input matInput [matDatepicker]="datepicker" formControlName="expirydate" placeholder="Select date" readonly>
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
   </form>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="close()">Cancel</button>
-  <button mat-button (click)="save()" [disabled]="form.invalid">Save</button>
+<div mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button (click)="close()" class="dialog-cancel">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid" class="dialog-save">Save</button>
 </div>
