@@ -54,7 +54,6 @@ public class NotificationService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            System.out.println(user.getId() + ", " + RecipientType.CANDIDATE);
             return notificationRepository.findByRecipientIdAndRecipientTypeOrderByCreatedAtDesc(pageable, user.getId(), RecipientType.CANDIDATE);
         }
         Optional<Company> optionalCompany = companyRepository.findByCredentials(credentials.getId());
