@@ -25,9 +25,10 @@ import {MatFormField} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
-    AppComponent, LogoutConfirmDialogComponent, AlertDialogComponent
+    AppComponent, LogoutConfirmDialogComponent
   ],
   imports: [
+    AlertDialogComponent,
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
