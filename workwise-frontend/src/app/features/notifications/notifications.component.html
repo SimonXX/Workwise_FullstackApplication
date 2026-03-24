@@ -1,36 +1,49 @@
-<div class="notifications-container">
-  <div class="notification-upbar">
-    <h2 class="notifications-title">Notifications</h2>
-    <i class="fas fa-trash-alt delete-icon" *ngIf="notifications.length > 0" (click)="clearNotifications()"></i>
+<div class="notifications-widget ww-card">
+  <div class="widget-header">
+    <h3><i class="fas fa-bell"></i> Notifications</h3>
+    <button class="clear-all-btn" *ngIf="notifications.length > 0" (click)="clearNotifications()" title="Delete all">
+      <i class="fas fa-trash-alt"></i>
+    </button>
   </div>
 
   <ng-container *ngIf="notifications.length > 0; else noNotifications">
     <div class="notification-list">
-      <div *ngFor="let notification of notifications" class="notification-item">
-        <div class="notification" [ngClass]="{'read': notification.isRead, 'unread': !notification.isRead}">
-          <span class="notification-created-at">{{ notification.createdAt | date: 'mediumTime' }}</span>
-          <div class="notification-header">
+      <div *ngFor="let notification of notifications"
+           class="notification-item"
+           [ngClass]="{'unread': !notification.isRead, 'read': notification.isRead}">
+        <div class="notification-dot" *ngIf="!notification.isRead"></div>
+        <div class="notification-body">
+          <div class="notification-top">
             <span class="notification-type">{{ notification.type }}</span>
-            <span class="notification-created-at">{{ notification.createdAt | date }}</span>
+            <span class="notification-time">{{ notification.createdAt | date:'short' }}</span>
           </div>
-          <div class="notification-message">{{ notification.message }}</div>
+          <p class="notification-message">{{ notification.message }}</p>
           <div class="notification-actions">
-            <button class="mark-as-read-button" *ngIf="!notification.isRead" (click)="markAsRead(notification.id)">Mark as Read</button>
-            <button class="mark-as-unread-button" *ngIf="notification.isRead" (click)="markAsUnread(notification.id)">Mark as Unread</button>
-            <button class="delete-notification-button" (click)="deleteNotification(notification.id)">Delete</button>
+            <button class="action-btn read-btn" *ngIf="!notification.isRead" (click)="markAsRead(notification.id)">
+              <i class="fas fa-check"></i> Read
+            </button>
+            <button class="action-btn unread-btn" *ngIf="notification.isRead" (click)="markAsUnread(notification.id)">
+              <i class="fas fa-undo"></i> Unread
+            </button>
+            <button class="action-btn delete-btn" (click)="deleteNotification(notification.id)">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="pagination">
-      <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
-      <span>Page {{currentPage + 1}} of {{totalPages}}</span>
-      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+    <div class="widget-pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 0"><i class="fas fa-chevron-left"></i></button>
+      <span>{{ currentPage + 1 }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1"><i class="fas fa-chevron-right"></i></button>
     </div>
   </ng-container>
 
   <ng-template #noNotifications>
-    <p>No Incoming Notification, have a good day!</p>
+    <div class="empty-notifications">
+      <i class="fas fa-check-circle"></i>
+      <p>All caught up!</p>
+    </div>
   </ng-template>
 </div>

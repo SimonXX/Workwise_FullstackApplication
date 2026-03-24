@@ -1,31 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Application } from '../../core/models/application.model';
-import {MyApplicationsService} from "./services/my-applications.service";
-import {FormsModule} from "@angular/forms";
-import {MatIcon} from "@angular/material/icon";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {MatDialog} from "@angular/material/dialog";
-import {ConfirmationDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
-import {AlertDialogComponent} from "../../shared/components/alert-dialog/alert-dialog.component";
-import {AuthService} from "../../core/services/auth.service";
-import {ModifyStatusDialogComponent} from "../../shared/components/modify-status/modify-status.component";
-import {UserInformationAppModel} from "../../core/models/userInformationApp.model";
-import {Router, RouterLink} from "@angular/router";
-
+import { MyApplicationsService } from './services/my-applications.service';
+import { FormsModule } from '@angular/forms';
+import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from '../../shared/components/alert-dialog/alert-dialog.component';
+import { AuthService } from '../../core/services/auth.service';
+import { ModifyStatusDialogComponent } from '../../shared/components/modify-status/modify-status.component';
+import { UserInformationAppModel } from '../../core/models/userInformationApp.model';
+import { Router } from '@angular/router';
 
 type ApplicationField = 'id' | 'status' | 'jobOfferTitle' | 'location' | 'company';
-
 
 @Component({
   selector: 'app-my-applications',
   standalone: true,
   imports: [
     FormsModule,
-    MatIcon,
     NgIf,
     NgForOf,
-    DatePipe,
-    RouterLink
+    NgClass,
+    DatePipe
   ],
   templateUrl: './my-applications.component.html',
   styleUrl: './my-applications.component.css'
@@ -49,31 +45,20 @@ export class MyApplicationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const token = this.authService.getToken(); // Assuming you have a method to get the token
-    this.role = this.authService.getRoleFromToken(token ?? ''); // Get the role from the token
-    console.log(this.role);
+    const token = this.authService.getToken();
+    this.role = this.authService.getRoleFromToken(token ?? '');
     this.loadMyApplications();
   }
 
   loadMyApplications(): void {
-    const observer = {
+    this.myApplicationsService.getMyApplications(this.currentPage, this.pageSize).subscribe({
       next: (response: any) => {
         this.myApplications = response.content;
         this.totalPages = response.totalPages;
-
-        if (this.searchText) {
-          this.applySearch();
-        } else {
-          this.myFilteredApplications = this.myApplications;
-        }
-
-        this.loadUserInformations()
-      },
-      error: (error: any) => {
-        console.error('Error loading applications: ', error);
+        this.myFilteredApplications = this.searchText ? this.filterApplications() : this.myApplications;
+        this.loadUserInformations();
       }
-    };
-    this.myApplicationsService.getMyApplications(this.currentPage, this.pageSize).subscribe(observer);
+    });
   }
 
   nextPage(): void {
@@ -96,36 +81,16 @@ export class MyApplicationsComponent implements OnInit {
   }
 
   applySearch(): void {
-    this.myFilteredApplications = this.myApplications.filter(application =>
-      this.getFieldValue(application, this.filterCriteria).toLowerCase().includes(this.searchText.toLowerCase()) &&
-      (this.statusFilter === '' || application.status.toLowerCase() === this.statusFilter.toLowerCase())
-    );
-  }
-
-  getFieldValue(application: Application, field: ApplicationField): string {
-    switch (field) {
-      case 'id':
-        return application.id.toString();
-      case 'jobOfferTitle':
-        return application.jobOffer.title;
-      case 'status':
-        return application.status;
-      case 'location':
-        return application.jobOffer.location;
-      case 'company':
-        return application.jobOffer.company.name;
-      default:
-        return '';
-    }
+    this.myFilteredApplications = this.filterApplications();
   }
 
   deleteApplication(applicationId: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
       data: {
-        title: 'Delete Confirmation',
-        message: 'Do you want to delete this Application?',
-        confirmText: 'Confirm',
+        title: 'Withdraw Application',
+        message: 'Are you sure you want to withdraw this application?',
+        confirmText: 'Withdraw',
         cancelText: 'Cancel'
       }
     });
@@ -133,75 +98,70 @@ export class MyApplicationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.myApplicationsService.deleteApplication(applicationId).subscribe({
-          next: response => {
-            console.log('Application deleted: ', response);
-            this.openSuccessDialog();
+          next: () => {
+            this.showAlert('Success', 'Application withdrawn');
             this.loadMyApplications();
-          },
-          error: error => {
-            console.error('Error deleting application: ', error);
           }
         });
       }
     });
   }
 
-  openEditApplicationSuccessDialog(): void{
-    this.dialog.open(AlertDialogComponent, {
-      data: { title: 'Success', message: 'Edited Application' }
-    });
-  }
-
-
   modifyApplication(applicationId: number, newStatus: string): void {
     this.myApplicationsService.modifyApplication(applicationId, newStatus).subscribe({
-      next: (response: Application) =>{
-        console.log('Application modified with success: ', response);
-        this.openEditApplicationSuccessDialog();
+      next: () => {
+        this.showAlert('Success', 'Application status updated');
         this.loadMyApplications();
-      },
-      error: (error: any)=>{
-        console.error('Error editing application: ', error);
       }
-    })
-  }
-
-  openSuccessDialog(): void {
-    this.dialog.open(AlertDialogComponent, {
-      data: { title: 'Success', message: 'Operation completed successfully' }
     });
   }
 
-
-  openStatusDialog(application: { status: any; id: number; }): void {
+  openStatusDialog(application: { status: any; id: number }): void {
     const dialogRef = this.dialog.open(ModifyStatusDialogComponent, {
       width: '300px',
-      data: { currentStatus: application.status },
+      data: { currentStatus: application.status }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.modifyApplication(application.id, result);
       }
     });
   }
 
-  loadUserInformations(): void {
+  navigateToProfile(email: string): void {
+    this.router.navigate(['/profile'], { queryParams: { email, viewCompany: true } });
+  }
+
+  private filterApplications(): Application[] {
+    return this.myApplications.filter(application =>
+      this.getFieldValue(application, this.filterCriteria).toLowerCase().includes(this.searchText.toLowerCase()) &&
+      (this.statusFilter === '' || application.status.toLowerCase() === this.statusFilter.toLowerCase())
+    );
+  }
+
+  private getFieldValue(application: Application, field: ApplicationField): string {
+    switch (field) {
+      case 'id': return application.id.toString();
+      case 'jobOfferTitle': return application.jobOffer.title;
+      case 'status': return application.status;
+      case 'location': return application.jobOffer.location;
+      case 'company': return application.jobOffer.company.name;
+      default: return '';
+    }
+  }
+
+  private loadUserInformations(): void {
     this.myFilteredApplications.forEach(application => {
       this.myApplicationsService.getInformationByUserId(application.idUser).subscribe({
         next: (userInfo: UserInformationAppModel) => {
           application.userInformation = userInfo;
-        },
-        error: (error: any) => {
-          console.error('Error loading user information: ', error);
         }
       });
     });
   }
 
-  navigateToProfile(email: string): void {
-    console.log(email);
-    let viewCompany = true;
-    this.router.navigate(['/profile'], { queryParams: { email, viewCompany} });
+  private showAlert(title: string, message: string): void {
+    this.dialog.open(AlertDialogComponent, { data: { title, message } });
   }
 }

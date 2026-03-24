@@ -1,84 +1,119 @@
 <div class="applications-container">
-  <h1 *ngIf="role === 'CANDIDATE'" class="page-title">My Applications</h1>
-  <h1 *ngIf="role === 'COMPANY'" class="page-title">Applications to your job offers</h1>
+  <div class="section-header ww-card">
+    <h2 *ngIf="role === 'CANDIDATE'"><i class="fas fa-file-alt"></i> My Applications</h2>
+    <h2 *ngIf="role === 'COMPANY'"><i class="fas fa-users"></i> Candidate Applications</h2>
 
-  <div class="search-container">
-    <!-- Barra di ricerca e dropdown -->
-    <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="applySearch()" class="search-bar" />
-    <span class="clear-search-icon" *ngIf="searchText" (click)="clearSearchText()">
-      <mat-icon>highlight_off</mat-icon>
-    </span>
-    <select [(ngModel)]="filterCriteria" class="filter-dropdown" (change)="applySearch()">
-      <option value="id">ID</option>
-      <option value="jobOfferTitle">Job Offer Title</option>
-      <option value="location">Location</option>
-      <option value="company" *ngIf="role === 'CANDIDATE'">Company</option>
-    </select>
-
-    <select [(ngModel)]="statusFilter" class="filter-dropdown" (change)="applySearch()">
-      <option value="">All Statuses</option>
-      <option value="pending">Pending</option>
-      <option value="accepted">Accepted</option>
-      <option value="rejected">Rejected</option>
-    </select>
+    <div class="search-bar-wrapper">
+      <div class="search-input-group">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="applySearch()" class="ww-input search-input">
+        <span class="clear-icon" *ngIf="searchText" (click)="clearSearchText()">
+          <i class="fas fa-times-circle"></i>
+        </span>
+      </div>
+      <select [(ngModel)]="filterCriteria" class="filter-select" (change)="applySearch()">
+        <option value="id">ID</option>
+        <option value="jobOfferTitle">Job Title</option>
+        <option value="location">Location</option>
+        <option value="company" *ngIf="role === 'CANDIDATE'">Company</option>
+      </select>
+      <select [(ngModel)]="statusFilter" class="filter-select" (change)="applySearch()">
+        <option value="">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="accepted">Accepted</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
   </div>
 
   <ng-container *ngIf="myFilteredApplications.length > 0; else noApplications">
-    <ul class="applications-list">
-      <li *ngFor="let application of myFilteredApplications" class="application-item">
-        <div class="application">
-          <div class="application-id">#{{ application.id }}</div>
-          <h2 class="application-title">{{ application.jobOffer.title }}</h2>
-          <p class="application-description">{{ application.applicationDate | date }}</p>
-          <p class="application-location">Status: {{ application.status }}</p>
-          <p class="job-offer-description">{{ application.jobOffer.description }}</p>
-          <p class="job-offer-location">Location: {{ application.jobOffer.location }}</p>
-          <p class="job-offer-company">Company: {{ application.jobOffer.company.name }}</p>
+    <div *ngFor="let application of myFilteredApplications" class="application-card ww-card">
+      <div class="app-card-header">
+        <div class="app-card-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="app-card-meta">
+          <h3 class="app-title">{{ application.jobOffer.title }}</h3>
+          <p class="app-company">{{ application.jobOffer.company.name }}</p>
+          <p class="app-location"><i class="fas fa-map-marker-alt"></i> {{ application.jobOffer.location }}</p>
+        </div>
+        <div class="app-header-right">
+          <span class="app-id">#{{ application.id }}</span>
+          <span class="status-badge" [ngClass]="{
+            'status-pending': application.status.toLowerCase() === 'pending',
+            'status-accepted': application.status.toLowerCase() === 'accepted',
+            'status-rejected': application.status.toLowerCase() === 'rejected'
+          }">{{ application.status }}</span>
+        </div>
+      </div>
 
-          <ng-container *ngIf="role === 'CANDIDATE'">
-            <button class="delete-app-button" (click)="deleteApplication(application.id)">Delete</button>
+      <p class="app-description">{{ application.jobOffer.description }}</p>
+
+      <div class="app-date">
+        <i class="fas fa-calendar-alt"></i> Applied: {{ application.applicationDate | date:'mediumDate' }}
+      </div>
+
+      <!-- Candidate: User Info Card -->
+      <div class="user-info-card" *ngIf="role === 'COMPANY'">
+        <div class="user-info-header">
+          <div class="user-info-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="user-info-details">
+            <a (click)="navigateToProfile(application.userInformation.email)" class="user-info-name">
+              {{ application.userInformation?.firstName }} {{ application.userInformation?.lastName }}
+            </a>
+            <p class="user-info-contact">
+              <i class="fas fa-phone"></i> {{ application.userInformation?.phone }}
+              <span class="separator">|</span>
+              <i class="fas fa-map-marker-alt"></i> {{ application.userInformation?.address }}
+            </p>
+          </div>
+        </div>
+        <div class="user-info-footer">
+          <ng-container *ngIf="application.userInformation?.cvBase64; else noCV">
+            <a class="cv-link" [href]="'data:application/pdf;base64,' + application.userInformation.cvBase64" download="CV.pdf">
+              <i class="fas fa-file-pdf"></i> Download CV
+            </a>
           </ng-container>
+          <ng-template #noCV>
+            <span class="cv-empty"><i class="fas fa-file"></i> No CV uploaded</span>
+          </ng-template>
+        </div>
+      </div>
 
+      <div class="app-card-footer">
+        <div></div>
+        <div class="app-actions">
+          <ng-container *ngIf="role === 'CANDIDATE'">
+            <button class="ww-btn-danger" (click)="deleteApplication(application.id)">
+              <i class="fas fa-trash"></i> Withdraw
+            </button>
+          </ng-container>
           <ng-container *ngIf="role === 'COMPANY'">
-            <div class="user-info-card">
-              <mat-icon class="profile-icon">person</mat-icon>
-              <h3>User Information</h3>
-              <a (click)="navigateToProfile(application.userInformation.email)" class="candidate-name">
-               <u> {{ application.userInformation?.firstName }} {{ application.userInformation?.lastName }}</u>
-              </a>
-              <p><strong>Last Name:</strong> {{ application.userInformation?.lastName }}</p>
-              <p><strong>Phone:</strong> {{ application.userInformation?.phone }}</p>
-              <p><strong>Address:</strong> {{ application.userInformation?.address }}</p>
-              <ng-container *ngIf="application.userInformation?.cvBase64; else noCV">
-                <div class="cv-download">
-                  <mat-icon class="cv-icon">description</mat-icon>
-                  <a [href]="'data:application/pdf;base64,' + application.userInformation.cvBase64" download="CV.pdf">CV</a>
-                </div>
-              </ng-container>
-              <ng-template #noCV>
-                <p class="cv-not-uploaded">CV not uploaded by Candidate</p>
-              </ng-template>
-            </div>
-            <div class="status-edit-container">
-              <button class="edit-status-button" (click)="openStatusDialog(application)">
-                Action
-              </button>
-            </div>
+            <button class="ww-btn-primary" (click)="openStatusDialog(application)">
+              <i class="fas fa-edit"></i> Update Status
+            </button>
           </ng-container>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
 
-    <!-- Paginazione -->
     <div class="pagination">
-      <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
-      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+      <button class="ww-btn-outline pagination-btn" (click)="previousPage()" [disabled]="currentPage === 0">
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+      <span class="page-info">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      <button class="ww-btn-outline pagination-btn" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
   </ng-container>
 
-  <!-- Nessuna applicazione disponibile -->
   <ng-template #noApplications>
-    <p>No Applications Available</p>
+    <div class="empty-state ww-card">
+      <i class="fas fa-inbox empty-icon"></i>
+      <p>No applications yet.</p>
+    </div>
   </ng-template>
 </div>
