@@ -1,152 +1,266 @@
-/* src/app/candidate-area/candidate-area.component.scss */
-
-/* Font generico per il componente */
-.candidate-dashboard {
-  font-family: Arial, sans-serif;
+.dashboard {
+  min-height: 100vh;
+  background-color: var(--ww-bg);
 }
-.user-profile {
+
+/* Navbar */
+.dashboard-navbar {
+  background: var(--ww-white);
+  border-bottom: 1px solid var(--ww-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  max-width: 1128px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-icon {
+  font-size: 28px;
+  color: var(--ww-blue);
+}
+
+.brand-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ww-text-primary);
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+}
+
+.nav-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0 16px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra gli elementi orizzontalmente */
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  color: var(--ww-text-muted);
+  transition: color 0.15s;
+  font-size: 12px;
+  min-width: 80px;
 }
 
-.user-icon {
+.nav-tab i {
+  font-size: 20px;
+}
+
+.nav-tab:hover {
+  color: var(--ww-text-primary);
+}
+
+.nav-tab.active {
+  color: var(--ww-text-primary);
+  border-bottom-color: var(--ww-text-primary);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.nav-profile {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra orizzontalmente l'immagine e il nome */
-  gap: 5px; /* Spazio tra l'immagine e il nome */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 8px;
+  height: 100%;
+  font-size: 12px;
+  color: var(--ww-text-muted);
+  transition: color 0.15s;
 }
 
-.user-icon img {
-  height: auto;
+.nav-profile:hover {
+  color: var(--ww-text-primary);
+}
+
+.avatar-sm {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ww-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--ww-text-secondary);
+}
+
+.nav-profile-name {
+  font-size: 12px;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--ww-border);
+  margin: 0 4px;
+}
+
+.nav-logout {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 8px;
+  height: 100%;
+  font-size: 12px;
+  color: var(--ww-text-muted);
+  transition: color 0.15s;
+}
+
+.nav-logout:hover {
+  color: var(--ww-red);
+}
+
+.nav-logout i {
+  font-size: 20px;
+}
+
+/* Dashboard Body */
+.dashboard-body {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 225px 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Left Sidebar */
+.sidebar-left {
+  position: sticky;
+  top: 72px;
+}
+
+.profile-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.profile-card-banner {
+  height: 56px;
+  background: linear-gradient(135deg, var(--ww-blue) 0%, #004182 100%);
+}
+
+.profile-card-body {
+  padding: 0 16px 16px;
+  text-align: center;
+  position: relative;
+}
+
+.profile-card-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--ww-white);
+  margin: -32px auto 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--ww-white);
+}
+
+.profile-card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
+  margin: 0 0 4px;
   cursor: pointer;
 }
 
-.user-icon a {
-  text-decoration: none; /* Rimuove la sottolineatura del link */
+.profile-card-name:hover {
+  color: var(--ww-blue);
+  text-decoration: underline;
 }
 
-.user-name {
-  font-weight: bold; /* Testo in grassetto per evidenziare il nome */
-  color: #333; /* Colore del testo */
+.profile-card-role {
+  font-size: 12px;
+  color: var(--ww-text-muted);
+  margin: 0;
 }
 
-/* Barra di navigazione */
-/* Stile generale per la navbar */
-.navbar {
-  background-color: #f8f9fa; /* Colore di sfondo più chiaro */
-  padding: 25px 20px; /* Padding interno, più spazio in alto e in basso */
-  display: flex; /* Utilizza flexbox per allineare gli elementi */
-  justify-content: space-between; /* Allinea gli elementi con spazio tra di loro */
-  align-items: center; /* Allinea verticalmente al centro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra sottile */
+/* Center Feed */
+.feed-center {
+  min-width: 0;
 }
 
-/* Stile per il testo del brand */
-.navbar-brand {
-  color: #333; /* Colore testo scuro */
-  font-size: 30px; /* Dimensione del testo aumentata */
-  font-weight: bold; /* Grassetto */
+/* Right Sidebar */
+.sidebar-right {
+  position: sticky;
+  top: 72px;
 }
 
-/* Stili per la lista di link nella navbar */
-.navbar-nav {
-  list-style-type: none; /* Rimuove i punti dalla lista */
-  margin: 0; /* Rimuove il margine predefinito */
-  padding: 0; /* Rimuove il padding predefinito */
-  display: flex; /* Utilizza flexbox per allineare gli elementi */
-}
-
-/* Stili per gli elementi della navbar */
-.nav-item {
-  margin-right: 20px; /* Margine a destra aumentato */
-}
-
-/* Stili per i link della navbar */
-.nav-link {
-  color: #555; /* Colore testo più scuro */
-  text-decoration: none; /* Rimuove la sottolineatura dei link */
-  padding: 12px; /* Padding interno aumentato */
-  transition: color 0.3s; /* Transizione del colore al passaggio del mouse */
-}
-
-/* Effetto di hover sui link della navbar */
-.nav-link:hover {
-  color: #007bff; /* Cambio colore al passaggio del mouse verso un blu più vivace */
-  text-decoration: underline; /* Sottolineatura al passaggio del mouse */
-}
-/* Stili per il link di Logout */
-.nav-link-logout {
-  color: #dc3545; /* Colore rosso per il Logout */
-  font-weight: bold; /* Grassetto per enfatizzare */
-  transition: color 0.3s; /* Transizione del colore al passaggio del mouse */
-}
-
-/* Effetto di hover sul link di Logout */
-.nav-link-logout:hover {
-  color: #c82333; /* Cambio colore più scuro al passaggio del mouse */
-  text-decoration: underline; /* Sottolineatura al passaggio del mouse */
-
-}
-/* Contenuto principale */
-.main-content {
-  padding: 20px;
-
-  h2 {
-    margin-bottom: 10px;
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr 300px;
   }
 
-
+  .sidebar-left {
+    display: none;
+  }
 }
 
-.main-content {
-  display: flex;
-  flex-direction: row;
-}
-.top-panel {
-  flex: 0.4;
-  padding: 30px;
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
 
-}
-.left-panel {
-  flex: 1; /* Occupa tutto lo spazio rimanente */
-  padding-right: 20px; /* Spazio tra i pannelli */
-}
+  .sidebar-right {
+    display: none;
+  }
 
-.right-panel {
-  width: 300px; /* Larghezza fissa per il pannello delle notifiche */
-  padding-left: 20px; /* Spazio tra i pannelli */
+  .navbar-center span {
+    display: none;
+  }
+
+  .nav-tab {
+    min-width: auto;
+    padding: 0 12px;
+  }
 }
-
-.toggle-button {
-  background-color: transparent;
-  color: #6f42c1; /* Colore viola */
-  border: 1px solid #6f42c1; /* Bordo viola */
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.toggle-button.active {
-  background-color: #6f42c1; /* Colore di sfondo viola */
-  color: #fff; /* Colore testo bianco */
-}
-
-.toggle-button:hover {
-  background-color: #6f42c1; /* Cambio colore al passaggio del mouse */
-  color: #fff; /* Colore testo bianco */
-}
-
-/* Stili per centrare i pulsanti */
-.centered-buttons {
-  text-align: center;
-  margin-top: 20px; /* Aggiungi un margine per distanziare dai contenuti sopra */
-}
-
-.centered-buttons button {
-  margin: 0 10px; /* Spazio tra i pulsanti */
-}
-
-

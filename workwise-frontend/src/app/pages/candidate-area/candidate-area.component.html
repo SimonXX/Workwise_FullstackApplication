@@ -1,50 +1,72 @@
-<div class="candidate-dashboard">
-  <!-- Barra di navigazione -->
-  <nav class="navbar">
-    <div class="navbar-brand">Candidate Dashboard</div>
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link-logout" (click)="logout()">Logout</a></li>
-    </ul>
-  </nav>
-  <div class="top-panel">
-    <div class="user-profile">
-      <div class="user-icon">
-        <a href="javascript:void(0)" (click)="redirectToProfile()">
-          <img src="assets/images/profile.png" alt="User Profile">
-        </a>
-        <div class="user-name">{{name}}</div>
+<div class="dashboard">
+  <!-- Top Navbar -->
+  <nav class="dashboard-navbar">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <div class="navbar-brand">
+          <i class="fas fa-briefcase brand-icon"></i>
+          <span class="brand-text">Workwise</span>
+        </div>
+      </div>
+
+      <div class="navbar-center">
+        <button class="nav-tab" [class.active]="activePanel === 'jobOffers'" (click)="togglePanel('jobOffers')">
+          <i class="fas fa-th-large"></i>
+          <span>Job Offers</span>
+        </button>
+        <button class="nav-tab" [class.active]="activePanel === 'myApplications'" (click)="togglePanel('myApplications')">
+          <i class="fas fa-file-alt"></i>
+          <span>My Applications</span>
+        </button>
+        <button class="nav-tab" [class.active-indicator]="showNotifications" (click)="toggleNotifications()">
+          <i class="fas fa-bell"></i>
+          <span>Notifications</span>
+        </button>
+      </div>
+
+      <div class="navbar-right">
+        <div class="nav-profile" (click)="redirectToProfile()">
+          <div class="avatar-sm">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="nav-profile-name">Me <i class="fas fa-caret-down"></i></span>
+        </div>
+        <div class="nav-divider"></div>
+        <button class="nav-logout" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
       </div>
     </div>
-  <!-- Pulsanti per selezionare il contenuto -->
-  <div class="toggle-buttons">
-    <div class="centered-buttons">
-      <button class="toggle-button" [ngClass]="{ 'active': activePanel === 'jobOffers' }" (click)="togglePanel('jobOffers')">View Job Offers</button>
-      <button class="toggle-button" [ngClass]="{ 'active': activePanel === 'myApplications' }" (click)="togglePanel('myApplications')">View My Applications</button>
-    </div>
-  </div>
+  </nav>
 
+  <!-- Main Content -->
+  <div class="dashboard-body">
+    <div class="dashboard-layout">
+      <!-- Left Sidebar - Profile Card -->
+      <aside class="sidebar-left">
+        <div class="profile-card ww-card">
+          <div class="profile-card-banner"></div>
+          <div class="profile-card-body">
+            <div class="profile-card-avatar" (click)="redirectToProfile()">
+              <img src="assets/images/profile.png" alt="Profile">
+            </div>
+            <h3 class="profile-card-name" (click)="redirectToProfile()">{{ name }}</h3>
+            <p class="profile-card-role">Candidate</p>
+          </div>
+        </div>
+      </aside>
 
-  <div class="main-content">
-
-    <div class="left-panel">
-      <div class="job-offers">
+      <!-- Center Feed -->
+      <main class="feed-center">
         <app-job-offers *ngIf="activePanel === 'jobOffers'"></app-job-offers>
         <app-my-applications *ngIf="activePanel === 'myApplications'"></app-my-applications>
-      </div>
-    </div>
+      </main>
 
-    <div class="right-panel">
-      <div class="notifications-sidebar" *ngIf="showNotifications">
+      <!-- Right Sidebar - Notifications -->
+      <aside class="sidebar-right" *ngIf="showNotifications">
         <app-notifications></app-notifications>
-      </div>
+      </aside>
     </div>
-
-    <!-- Icona a forma di campanella -->
-    <button mat-icon-button (click)="toggleNotifications()">
-      <mat-icon>notifications</mat-icon>
-    </button>
   </div>
-
-
-</div>
 </div>
