@@ -1,19 +1,40 @@
-<body>
-<form [formGroup]="form" (ngSubmit)="login()" class="login-form">
-  <img src="assets/images/login.png" alt="Workwise Logo">
+<div class="auth-page">
+  <div class="auth-header">
+    <a class="auth-brand" routerLink="/">
+      <i class="fas fa-briefcase brand-icon"></i>
+      <span class="brand-text">Workwise</span>
+    </a>
+  </div>
 
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email" class="form-control" placeholder="Email">
+  <div class="auth-card ww-card">
+    <h1>Sign in</h1>
+    <p class="auth-subtitle">Stay updated on your professional world.</p>
+
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" class="ww-input" placeholder="Enter your email">
+      </div>
+
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" class="ww-input" placeholder="Enter your password">
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="ww-btn-primary auth-submit" [disabled]="form.invalid">Sign in</button>
+    </form>
+
+    <div class="auth-divider">
+      <span>New to Workwise?</span>
+    </div>
+
+    <div class="auth-links">
+      <a routerLink="/register-as-a-candidate" class="ww-btn-outline auth-link-btn">Join as a Candidate</a>
+      <a routerLink="/register-as-a-company" class="ww-btn-outline auth-link-btn">Join as a Company</a>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="password">Password:</label>
-    <input id="password" formControlName="password" type="password" class="form-control" placeholder="Password">
-  </div>
-  <button type="submit" class="login-button">Login</button>
-  <!-- Icona della casetta per tornare alla home -->
-  <div class="home-button-container" (click)="goHome()">
-    <mat-icon class="home-icon">home</mat-icon>
-  </div>
-</form>
-</body>
+</div>

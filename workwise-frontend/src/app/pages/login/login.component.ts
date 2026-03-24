@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthService} from "../../core/services/auth.service";
-import {Router} from "@angular/router";
-import {NgIf} from "@angular/common";
-import {MatIcon} from "@angular/material/icon";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../core/services/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -12,22 +11,22 @@ import {MatIcon} from "@angular/material/icon";
   imports: [
     ReactiveFormsModule,
     NgIf,
-    MatIcon
+    RouterLink
   ],
-  styleUrls: ['./login.component.scss']
-
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  form:FormGroup;
+  form: FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb:FormBuilder,
-              private authService: AuthService,
-              private router: Router) {
-
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
-      email: ['',Validators.required],
-      password: ['',Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -35,11 +34,9 @@ export class LoginComponent {
     const val = this.form.value;
 
     if (val.email && val.password) {
-      console.log(val.email, val.password);
       this.authService.login(val.email, val.password).subscribe({
         next: (response) => {
           if (response.status === 200) {
-            console.log("User is logged in");
             const token = response.body.token;
             const role = this.authService.getRoleFromToken(token);
             if (role === 'CANDIDATE') {
@@ -47,25 +44,14 @@ export class LoginComponent {
             } else if (role === 'COMPANY') {
               this.router.navigateByUrl('/companyArea');
             } else {
-              console.error('Unknown role', role);
               this.errorMessage = 'Unknown role';
             }
           }
         },
         error: (error) => {
-          console.error("Login failed", error);
-          this.errorMessage = error.message || 'Login failed';
-        },
-        complete: () => {
-          console.log("Login request complete");
+          this.errorMessage = error.message || 'Invalid email or password';
         }
       });
     }
   }
-
-  goHome() {
-    this.router.navigateByUrl('');
-  }
 }
-
-
