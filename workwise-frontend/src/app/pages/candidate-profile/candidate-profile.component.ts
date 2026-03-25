@@ -1,20 +1,14 @@
-import {ActivatedRoute, Router} from "@angular/router";
-
-;import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe, NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {
-  MatDatepicker,
-  MatDatepickerInput,
-  MatDatepickerModule,
-  MatDatepickerToggle
-} from "@angular/material/datepicker";
-import {MatInput} from "@angular/material/input";
-import {MatNativeDateModule} from "@angular/material/core";
-import {AuthService} from "../../core/services/auth.service";
-import {CandidateProfileService} from "./services/candidate-profile.service";
-import {User, UserImpl} from "../../core/models/user.model";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DatePipe, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatSuffix } from '@angular/material/form-field';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AuthService } from '../../core/services/auth.service';
+import { CandidateProfileService } from './services/candidate-profile.service';
+import { User, UserImpl } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -23,36 +17,36 @@ import {User, UserImpl} from "../../core/models/user.model";
     NgIf,
     DatePipe,
     FormsModule,
-    MatFormField,
     MatInput,
     MatDatepickerInput,
     MatDatepickerToggle,
     MatDatepicker,
-    MatLabel,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSuffix,
+    MatSuffix
   ],
   templateUrl: './candidate-profile.component.html',
   styleUrl: './candidate-profile.component.css'
 })
-export class CandidateProfileComponent implements OnInit{
+export class CandidateProfileComponent implements OnInit {
   user: User;
   editedUser: User;
   viewCompany: boolean = false;
-
-
-  //email: String = localStorage.getItem('email') || '';
   email: string = '';
-  editingMode = false; // Variabile per gestire lo stato di editing
+  editingMode = false;
   selectedFile: File | null = null;
 
-  constructor(private router: Router, private authService: AuthService, private candidateProfileService: CandidateProfileService, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private candidateProfileService: CandidateProfileService,
+    private route: ActivatedRoute
+  ) {
     this.user = new UserImpl();
     this.editedUser = new UserImpl();
 
     this.route.queryParams.subscribe(params => {
-      this.email= params['email'] || null;
+      this.email = params['email'] || null;
       this.viewCompany = params['viewCompany'];
     });
   }
@@ -62,78 +56,52 @@ export class CandidateProfileComponent implements OnInit{
   }
 
   loadMyUser(): void {
-    const observer = {
+    this.candidateProfileService.getMyInformation(this.email).subscribe({
       next: (response: any) => {
         this.user = response;
-        this.editedUser = response;
-      },
-      error: (error: any) => {
-        console.error('Error loading User Information', error);
+        this.editedUser = { ...response };
       }
-    };
-    this.candidateProfileService.getMyInformation(this.email).subscribe(observer);
+    });
   }
 
   goToCandidateArea(): void {
-    // Naviga alla pagina candidateArea
     this.router.navigate(['/candidateArea']);
   }
 
-  editProfile() {
+  editProfile(): void {
     this.editingMode = true;
-    console.log(this.editedUser);
   }
 
-
-
-  saveChanges() {
-    console.log(this.editedUser);
-
-
-    const observer = {
+  saveChanges(): void {
+    this.candidateProfileService.updateUserInformation(this.editedUser).subscribe({
       next: (response: any) => {
-        this.user = response // Assegna la risposta all'oggetto user
-        // this.editedCompany = response;
-        console.log(this.user);
-      },
-      error: (error: any) => {
-
-        console.error('Error loading Modify User Information', error);
+        this.user = response;
       }
-    };
-    this.candidateProfileService.updateUserInformation(this.editedUser).subscribe(observer);
+    });
     this.editingMode = false;
   }
 
-  cancelEditing() {
+  cancelEditing(): void {
     this.editingMode = false;
-    this.editedUser = this.user;
     this.loadMyUser();
   }
 
-// Metodo per gestire l'evento keydown per il campo telefono
-  onKeyDown(event: KeyboardEvent) {
-    // Ottieni il valore dell'input corrente
-    const inputValue = (event.target as HTMLInputElement).value;
-
-    // Controlla se il tasto premuto è un numero o il tasto Backspace/Delete
+  onKeyDown(event: KeyboardEvent): boolean {
     if (
-      // Numeri da 0 a 9
       (event.key >= '0' && event.key <= '9') ||
-      // Tasti speciali per la gestione dell'input (Backspace, Delete)
-      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(event.key)
+      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)
     ) {
-      // Se il tasto è valido, permetti l'input
       return true;
     } else {
-      // Altrimenti, previeni l'input del carattere
       event.preventDefault();
       return false;
     }
   }
+
   logout(): void {
     this.authService.logout();
   }
+
   protected readonly localStorage = localStorage;
 
   onFileSelected(event: any): void {
@@ -144,7 +112,6 @@ export class CandidateProfileComponent implements OnInit{
   }
 
   uploadCV(): void {
-    console.log(this.editedUser.cvBase64);
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -163,6 +130,4 @@ export class CandidateProfileComponent implements OnInit{
       link.click();
     }
   }
-
-
 }

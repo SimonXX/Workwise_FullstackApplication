@@ -1,50 +1,72 @@
-<div class="candidate-dashboard">
-  <!-- Barra di navigazione -->
-  <nav class="navbar">
-    <div class="navbar-brand">Company Dashboard</div>
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link-logout" (click)="logout()">Logout</a></li>
-    </ul>
-  </nav>
-  <div class="top-panel">
-    <div class="user-profile">
-      <div class="user-icon">
-        <a href="/profileCompany">
-          <img src="assets/images/company.png" alt="User Profile">
+<div class="dashboard">
+  <!-- Top Navbar -->
+  <nav class="dashboard-navbar">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <div class="navbar-brand">
+          <i class="fas fa-briefcase brand-icon"></i>
+          <span class="brand-text">Workwise</span>
+        </div>
+      </div>
+
+      <div class="navbar-center">
+        <button class="nav-tab" [class.active]="activePanel === 'jobOffers'" (click)="togglePanel('jobOffers')">
+          <i class="fas fa-th-large"></i>
+          <span>Job Offers</span>
+        </button>
+        <button class="nav-tab" [class.active]="activePanel === 'myApplications'" (click)="togglePanel('myApplications')">
+          <i class="fas fa-file-alt"></i>
+          <span>Applications</span>
+        </button>
+        <button class="nav-tab" (click)="toggleNotifications()">
+          <i class="fas fa-bell"></i>
+          <span>Notifications</span>
+        </button>
+      </div>
+
+      <div class="navbar-right">
+        <a class="nav-profile" routerLink="/profileCompany">
+          <div class="avatar-sm">
+            <i class="fas fa-building"></i>
+          </div>
+          <span class="nav-profile-name">Me <i class="fas fa-caret-down"></i></span>
         </a>
-        <div class="user-name">{{name}}</div>
+        <div class="nav-divider"></div>
+        <button class="nav-logout" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
       </div>
     </div>
-    <!-- Pulsanti per selezionare il contenuto -->
-    <div class="toggle-buttons">
-      <div class="centered-buttons">
-        <button class="toggle-button" [ngClass]="{ 'active': activePanel === 'jobOffers' }" (click)="togglePanel('jobOffers')">View Job Offers</button>
-        <button class="toggle-button" [ngClass]="{ 'active': activePanel === 'myApplications' }" (click)="togglePanel('myApplications')">View My Applications</button>
-      </div>
-    </div>
+  </nav>
 
-
-    <div class="main-content">
-
-      <div class="left-panel">
-        <div class="job-offers">
-          <app-job-offers *ngIf="activePanel === 'jobOffers'"></app-job-offers>
-          <app-my-applications *ngIf="activePanel === 'myApplications'"></app-my-applications>
+  <!-- Main Content -->
+  <div class="dashboard-body">
+    <div class="dashboard-layout">
+      <!-- Left Sidebar - Profile Card -->
+      <aside class="sidebar-left">
+        <div class="profile-card ww-card">
+          <div class="profile-card-banner company-banner"></div>
+          <div class="profile-card-body">
+            <a class="profile-card-avatar" routerLink="/profileCompany">
+              <img src="assets/images/company.png" alt="Company">
+            </a>
+            <h3 class="profile-card-name"><a routerLink="/profileCompany">{{ name }}</a></h3>
+            <p class="profile-card-role">Company</p>
+          </div>
         </div>
-      </div>
+      </aside>
 
-      <div class="right-panel">
-        <div class="notifications-sidebar" *ngIf="showNotifications">
-          <app-notifications></app-notifications>
-        </div>
-      </div>
+      <!-- Center Feed -->
+      <main class="feed-center">
+        <app-job-offers *ngIf="activePanel === 'jobOffers'"></app-job-offers>
+        <app-my-applications *ngIf="activePanel === 'myApplications'"></app-my-applications>
+      </main>
 
-      <!-- Icona a forma di campanella -->
-      <button mat-icon-button (click)="toggleNotifications()">
-        <mat-icon>notifications</mat-icon>
-      </button>
+      <!-- Right Sidebar - Notifications -->
+      <aside class="sidebar-right" *ngIf="showNotifications">
+        <app-notifications></app-notifications>
+      </aside>
     </div>
-
-
   </div>
 </div>

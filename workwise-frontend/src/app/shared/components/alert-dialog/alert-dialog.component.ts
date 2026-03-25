@@ -1,11 +1,14 @@
 // alert-dialog.component.ts
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-alert-dialog',
+  standalone: true,
+  imports: [NgIf],
   templateUrl: './alert-dialog.component.html',
-  styleUrls: ['./alert-dialog.component.css'] // Se hai un file di stile separato
+  styleUrls: ['./alert-dialog.component.css']
 })
 export class AlertDialogComponent {
   constructor(

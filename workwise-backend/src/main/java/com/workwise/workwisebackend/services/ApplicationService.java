@@ -165,8 +165,6 @@ public class ApplicationService {
 
         Optional<JobOffer> jobOffer = jobOfferRepository.findById(application.getJobOffer().getId());
 
-        System.out.println(jobOffer.get().getCompany().getCredentials().getEmail());
-
         if (!jobOffer.get().getCompany().getCredentials().getEmail().equals(email)) {
             throw new RuntimeException("Access denied");
         }

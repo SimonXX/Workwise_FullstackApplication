@@ -1,10 +1,11 @@
-<!-- logout-confirm-dialog.component.html -->
-
-<h2 mat-dialog-title>Confirm Logout</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title class="dialog-title">
+  <i class="fas fa-sign-out-alt dialog-title-icon"></i>
+  Confirm Logout
+</h2>
+<mat-dialog-content class="dialog-content">
   <p>Are you sure you want to logout?</p>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="cancel()" color="primary">Cancel</button>
-  <button mat-button (click)="confirmLogout()" color="warn">Logout</button>
+<mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-button (click)="cancel()" class="dialog-cancel">Stay</button>
+  <button mat-raised-button color="warn" (click)="confirmLogout()" class="dialog-logout">Logout</button>
 </mat-dialog-actions>

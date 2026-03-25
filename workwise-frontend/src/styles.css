@@ -1,7 +1,193 @@
-/* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import '@fortawesome/fontawesome-free/css/all.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+:root {
+  --ww-blue: #0a66c2;
+  --ww-blue-hover: #004182;
+  --ww-blue-light: #e8f0fe;
+  --ww-bg: #f3f2ef;
+  --ww-white: #ffffff;
+  --ww-border: #e0dfdc;
+  --ww-text-primary: #191919;
+  --ww-text-secondary: #666666;
+  --ww-text-muted: #00000099;
+  --ww-green: #057642;
+  --ww-green-light: #e6f4ea;
+  --ww-red: #cc1016;
+  --ww-red-light: #fce8e6;
+  --ww-orange: #b24020;
+  --ww-card-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  --ww-card-radius: 8px;
+  --ww-font: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--ww-bg);
+  font-family: var(--ww-font);
+  color: var(--ww-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--ww-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ww-blue-hover);
+  text-decoration: underline;
+}
+
+/* LinkedIn-style card */
+.ww-card {
+  background: var(--ww-white);
+  border-radius: var(--ww-card-radius);
+  box-shadow: var(--ww-card-shadow);
+  padding: 16px 20px;
+}
+
+/* LinkedIn-style primary button */
+.ww-btn-primary {
+  background-color: var(--ww-blue);
+  color: var(--ww-white);
+  border: none;
+  border-radius: 24px;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-family: var(--ww-font);
+  line-height: 1.4;
+}
+
+.ww-btn-primary:hover {
+  background-color: var(--ww-blue-hover);
+}
+
+.ww-btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* LinkedIn-style outline button */
+.ww-btn-outline {
+  background-color: transparent;
+  color: var(--ww-blue);
+  border: 1px solid var(--ww-blue);
+  border-radius: 24px;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--ww-font);
+  line-height: 1.4;
+}
+
+.ww-btn-outline:hover {
+  background-color: var(--ww-blue-light);
+  border-color: var(--ww-blue-hover);
+}
+
+/* Danger button */
+.ww-btn-danger {
+  background-color: transparent;
+  color: var(--ww-red);
+  border: 1px solid var(--ww-red);
+  border-radius: 24px;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--ww-font);
+  line-height: 1.4;
+}
+
+.ww-btn-danger:hover {
+  background-color: var(--ww-red-light);
+}
+
+/* Success button */
+.ww-btn-success {
+  background-color: var(--ww-green);
+  color: var(--ww-white);
+  border: none;
+  border-radius: 24px;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-family: var(--ww-font);
+  line-height: 1.4;
+}
+
+.ww-btn-success:hover {
+  background-color: #045e35;
+}
+
+/* Form input styling */
+.ww-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--ww-border);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: var(--ww-font);
+  color: var(--ww-text-primary);
+  background: var(--ww-white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ww-input:focus {
+  outline: none;
+  border-color: var(--ww-blue);
+  box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+}
+
+/* Angular Material overrides for LinkedIn look */
+.mat-mdc-dialog-container {
+  border-radius: var(--ww-card-radius) !important;
+}
+
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-flat-button.mat-primary {
+  background-color: var(--ww-blue) !important;
+  border-radius: 24px !important;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+  color: var(--ww-blue) !important;
+  border-color: var(--ww-blue) !important;
+  border-radius: 24px !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}

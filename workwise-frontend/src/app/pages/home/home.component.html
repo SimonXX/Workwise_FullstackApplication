@@ -1,17 +1,79 @@
-<div class="container">
-  <div class="content">
-    <div class="animation-container">
-      <h1>Welcome to Workwise</h1>
-      <p>This is our fantastic job platform!</p>
-      <img src="assets/images/home.png" alt="Workwise Logo">
-      <div class="account-type">
-        <nav>
-          <a href="/register-as-a-company">Register as a Company</a>
-          <a href="/register-as-a-candidate">Register as a Candidate</a>
-          <a href="/login">Login</a>
-          <span></span>
-        </nav>
+<div class="home-wrapper">
+  <!-- Navbar -->
+  <nav class="home-navbar">
+    <div class="navbar-inner">
+      <div class="navbar-brand">
+        <i class="fas fa-briefcase brand-icon"></i>
+        <span class="brand-text">Workwise</span>
+      </div>
+      <div class="navbar-actions">
+        <a href="/login" class="ww-btn-outline">Sign in</a>
+        <a href="/register-as-a-candidate" class="ww-btn-primary">Join now</a>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to your<br><span class="hero-highlight">professional community</span></h1>
+      <p class="hero-subtitle">Connect with opportunities, showcase your talent, and build the career you deserve.</p>
+      <div class="hero-cta">
+        <a href="/register-as-a-candidate" class="ww-btn-primary hero-btn">
+          <i class="fas fa-user-plus"></i> Join as a Candidate
+        </a>
+        <a href="/register-as-a-company" class="ww-btn-outline hero-btn">
+          <i class="fas fa-building"></i> Register as a Company
+        </a>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <img src="assets/images/home.png" alt="Workwise Platform">
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="features-grid">
+      <div class="feature-card ww-card">
+        <div class="feature-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3>Find the right job</h3>
+        <p>Browse through curated job offers tailored to your skills and experience.</p>
+      </div>
+      <div class="feature-card ww-card">
+        <div class="feature-icon">
+          <i class="fas fa-paper-plane"></i>
+        </div>
+        <h3>Apply with ease</h3>
+        <p>Submit your applications and track their status in real time.</p>
+      </div>
+      <div class="feature-card ww-card">
+        <div class="feature-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <h3>Stay informed</h3>
+        <p>Get instant notifications on application updates and new opportunities.</p>
+      </div>
+      <div class="feature-card ww-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Hire top talent</h3>
+        <p>Post job offers and manage applications from qualified candidates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="home-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <i class="fas fa-briefcase"></i>
+        <span>Workwise</span>
+      </div>
+      <p class="footer-copy">&copy; 2025 Workwise. All rights reserved.</p>
+    </div>
+  </footer>
 </div>

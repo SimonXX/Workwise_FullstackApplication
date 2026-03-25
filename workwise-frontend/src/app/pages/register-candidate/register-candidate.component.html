@@ -1,50 +1,71 @@
-<body>
-<form [formGroup]="form" (ngSubmit)="register()" class="register-form">
-  <img src="assets/images/user.png" alt="Registration Logo">
+<div class="auth-page">
+  <div class="auth-header">
+    <a class="auth-brand" routerLink="/">
+      <i class="fas fa-briefcase brand-icon"></i>
+      <span class="brand-text">Workwise</span>
+    </a>
+  </div>
 
-  <div class="form-group">
-    <label for="firstName">First Name:</label>
-    <input id="firstName" formControlName="firstName" type="text" class="form-control" placeholder="First Name">
-    <div *ngIf="isFieldInvalid('firstName')" class="error-message">First Name is required.</div>
-  </div>
-  <div class="form-group">
-    <label for="lastName">Last Name:</label>
-    <input id="lastName" formControlName="lastName" type="text" class="form-control" placeholder="Last Name">
-    <div *ngIf="isFieldInvalid('lastName')" class="error-message">Last Name is required.</div>
-  </div>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email" class="form-control" placeholder="...@...">
-    <div *ngIf="isFieldInvalid('email')" class="error-message">Enter a valid email address.</div>
-  </div>
-  <div class="form-group">
-    <label for="password">Password:</label>
-    <input id="password" formControlName="password" type="password" class="form-control" placeholder="Password">
-    <div *ngIf="isFieldInvalid('password')" class="error-message">Password is required.</div>
-  </div>
-  <div class="form-group">
-    <label for="phone">Phone:</label>
-    <input id="phone" formControlName="phone" type="text" class="form-control" placeholder="only digits" (keydown)="onKeyDown($event)">
-    <div *ngIf="isFieldInvalid('phone')" class="error-message">Phone number is required and must contain only digits.</div>
-  </div>
-  <div class="form-group">
-    <label for="address">Address:</label>
-    <input id="address" formControlName="address" type="text" class="form-control" placeholder="Address">
-    <div *ngIf="isFieldInvalid('address')" class="error-message">Address is required.</div>
-  </div>
-  <div class="form-group">
-    <label for="dateOfBirth">Date of Birth:</label>
-    <div class="date-picker-container">
-      <input matInput [matDatepicker]="datepicker" id="dateOfBirth" formControlName="dateOfBirth" class="form-control" placeholder="YYYY-MM-DD" readonly>
-      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker></mat-datepicker>
+  <div class="auth-card ww-card">
+    <h1>Join as a Candidate</h1>
+    <p class="auth-subtitle">Make the most of your professional life.</p>
+
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName">First Name</label>
+          <input id="firstName" formControlName="firstName" type="text" class="ww-input" placeholder="First name">
+          <div *ngIf="isFieldInvalid('firstName')" class="field-error">First name is required.</div>
+        </div>
+        <div class="form-field">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" formControlName="lastName" type="text" class="ww-input" placeholder="Last name">
+          <div *ngIf="isFieldInvalid('lastName')" class="field-error">Last name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" class="ww-input" placeholder="you&#64;example.com">
+        <div *ngIf="isFieldInvalid('email')" class="field-error">Enter a valid email address.</div>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" class="ww-input" placeholder="Create a password">
+        <div *ngIf="isFieldInvalid('password')" class="field-error">Password is required.</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="phone">Phone</label>
+          <input id="phone" formControlName="phone" type="text" class="ww-input" placeholder="Digits only" (keydown)="onKeyDown($event)">
+          <div *ngIf="isFieldInvalid('phone')" class="field-error">Phone must contain only digits.</div>
+        </div>
+        <div class="form-field">
+          <label for="dateOfBirth">Date of Birth</label>
+          <div class="date-picker-container">
+            <input matInput [matDatepicker]="datepicker" id="dateOfBirth" formControlName="dateOfBirth" class="ww-input" placeholder="Select date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+          </div>
+          <div *ngIf="isFieldInvalid('dateOfBirth')" class="field-error">Date of birth is required.</div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="address">Address</label>
+        <input id="address" formControlName="address" type="text" class="ww-input" placeholder="Your address">
+        <div *ngIf="isFieldInvalid('address')" class="field-error">Address is required.</div>
+      </div>
+
+      <button type="submit" class="ww-btn-primary auth-submit" [disabled]="form.invalid">Create account</button>
+    </form>
+
+    <div class="auth-divider">
+      <span>Already on Workwise?</span>
     </div>
-    <div *ngIf="isFieldInvalid('dateOfBirth')" class="error-message">Date of Birth is required.</div>
-  </div>
 
-  <button type="submit" class="register-button">Register</button>
-  <div class="home-button-container" (click)="goHome()">
-    <mat-icon class="home-icon">home</mat-icon>
+    <a routerLink="/login" class="ww-btn-outline auth-link-btn">Sign in</a>
   </div>
-</form>
-</body>
+</div>

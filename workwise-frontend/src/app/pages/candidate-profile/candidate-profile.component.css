@@ -1,224 +1,317 @@
-.navbar {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa; /* Colore di sfondo più chiaro */
-  padding: 25px 20px; /* Padding interno, più spazio in alto e in basso */
-  display: flex; /* Utilizza flexbox per allineare gli elementi */
-  justify-content: space-between; /* Allinea gli elementi con spazio tra di loro */
-  align-items: center; /* Allinea verticalmente al centro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra sottile */
+.profile-page {
+  min-height: 100vh;
+  background-color: var(--ww-bg);
 }
 
-/* Stile per il testo del brand */
-.navbar-brand {
-  color: #333; /* Colore testo scuro */
-  font-size: 30px; /* Dimensione del testo aumentata */
-  font-weight: bold; /* Grassetto */
+/* Navbar */
+.profile-navbar {
+  background: var(--ww-white);
+  border-bottom: 1px solid var(--ww-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Stili per la lista di link nella navbar */
-.navbar-nav {
-  list-style-type: none; /* Rimuove i punti dalla lista */
-  margin: 0; /* Rimuove il margine predefinito */
-  padding: 0; /* Rimuove il padding predefinito */
-  display: flex; /* Utilizza flexbox per allineare gli elementi */
-}
-
-/* Stili per gli elementi della navbar */
-.nav-item {
-  margin-right: 20px; /* Margine a destra aumentato */
-}
-
-/* Stili per i link della navbar */
-.nav-link {
-  color: #555; /* Colore testo più scuro */
-  text-decoration: none; /* Rimuove la sottolineatura dei link */
-  padding: 12px; /* Padding interno aumentato */
-  transition: color 0.3s; /* Transizione del colore al passaggio del mouse */
-}
-
-/* Effetto di hover sui link della navbar */
-.nav-link:hover {
-  color: #007bff; /* Cambio colore al passaggio del mouse verso un blu più vivace */
-  text-decoration: underline; /* Sottolineatura al passaggio del mouse */
-}
-
-/* Stili per il link di Logout */
-.nav-link-logout {
-  color: #dc3545; /* Colore rosso per il Logout */
-  font-weight: bold; /* Grassetto per enfatizzare */
-  transition: color 0.3s; /* Transizione del colore al passaggio del mouse */
-}
-
-/* Effetto di hover sul link di Logout */
-.nav-link-logout:hover {
-  color: #c82333; /* Cambio colore più scuro al passaggio del mouse */
-  text-decoration: underline; /* Sottolineatura al passaggio del mouse */
-}
-
-.profile-wrapper {
-  padding: 30px;
+.navbar-inner {
+  max-width: 1128px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 90px); /* Altezza minima meno l'altezza della navbar */
-  background-color: #f0f0f0; /* Colore di sfondo grigio chiaro */
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
 }
 
-.profile-card {
-  width: 100%;
-  max-width: 800px;
-  padding: 40px;
-  background-color: #ffffff; /* Sfondo bianco */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra sottile */
-  border-radius: 8px; /* Bordi arrotondati */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.profile-welcome {
-  text-align: center;
-  margin-bottom: 20px;
+.brand-icon {
+  font-size: 28px;
+  color: var(--ww-blue);
 }
 
-.profile-welcome p {
-  font-size: 24px; /* Dimensione del carattere aumentata */
+.brand-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ww-text-primary);
 }
 
-.profile-welcome i {
-  font-style: italic;
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logout-btn {
+  background: none;
+  border: none;
+  color: var(--ww-text-muted);
+  cursor: pointer;
   font-size: 14px;
-  color: #666666;
-  display: block;
-  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: color 0.15s;
 }
 
-.profile-header {
+.nav-logout-btn:hover {
+  color: var(--ww-red);
+}
+
+/* Profile Container */
+.profile-container {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra verticalmente i figli */
-  text-align: center; /* Centra il testo orizzontalmente */
+  gap: 16px;
 }
 
-.profile-header h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
+/* Header Card */
+.profile-header-card {
+  padding: 0;
+  overflow: hidden;
 }
 
-.profile-header p {
-  color: #777777;
-  font-size: 16px;
+.profile-banner {
+  height: 120px;
+  background: linear-gradient(135deg, var(--ww-blue) 0%, #004182 100%);
 }
 
-.mail-item {
+.profile-header-body {
+  padding: 0 24px 24px;
   display: flex;
-  align-items: center; /* Allinea verticalmente al centro */
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.mail-label {
-  margin-right: 10px; /* Margine a destra per separare label e value */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--ww-white);
+  margin-top: -60px;
+  overflow: hidden;
+  background: var(--ww-white);
+  flex-shrink: 0;
 }
 
-.mail-label i {
-  margin-right: 5px; /* Margine a destra per separare icona e testo */
-}
-
-.profile-details .detail-item {
-  background-color: #f9f9f9; /* Sfondo grigio chiaro delle card */
-  padding: 15px; /* Padding interno */
-  border-radius: 8px; /* Bordi arrotondati */
-  margin-bottom: 15px; /* Spazio tra le card */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Ombra sottile */
-}
-
-.profile-details .detail-label {
-  font-weight: bold;
-}
-
-.profile-details .detail-value {
-  margin-top: 5px; /* Spazio superiore del valore */
-}
-
-.profile-buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.profile-buttons button {
-  margin: 0 10px;
-  padding: 12px 24px; /* Padding pulsante */
-  font-size: 16px; /* Dimensione del carattere */
-  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-  border: 2px solid #8a2be2; /* Bordo viola */
-  border-radius: 4px; /* Bordi arrotondati */
-  background-color: #ffffff; /* Colore di sfondo bianco */
-  color: #8a2be2; /* Colore testo viola */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transizioni */
-}
-
-.profile-buttons button:hover {
-  background-color: #8a2be2; /* Colore di sfondo viola al passaggio del mouse */
-  color: #ffffff; /* Colore testo bianco al passaggio del mouse */
-}
-
-.btn-info {
-  background-color: #17a2b8; /* Colore di sfondo blu */
-  color: #ffffff; /* Colore testo bianco */
-}
-
-.btn-primary {
-  background-color: #007bff; /* Colore di sfondo blu scuro */
-  color: #ffffff; /* Colore testo bianco */
-}
-
-.btn:hover {
-  opacity: 0.8; /* Opacità al passaggio del mouse */
-}
-
-input {
+.profile-avatar img {
   width: 100%;
-  padding: 8px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-header-info {
+  flex: 1;
+  padding-top: 12px;
+  min-width: 200px;
+}
+
+.profile-header-info h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--ww-text-primary);
+}
+
+.profile-role {
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  color: var(--ww-text-secondary);
+  margin: 0 0 4px;
 }
 
-.btn {
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
+.profile-email {
+  font-size: 14px;
+  color: var(--ww-text-muted);
+  margin: 0;
 }
 
-.upload-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  transition: background-color 0.3s ease;
+.profile-email i {
+  margin-right: 4px;
 }
 
-.upload-btn:hover {
-  background-color: #45a049;
+.profile-header-actions {
+  padding-top: 12px;
+  display: flex;
+  gap: 8px;
 }
 
-.file-input {
+/* Edit fields */
+.edit-name-fields {
+  padding-top: 4px;
+}
+
+.edit-field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.edit-field {
+  flex: 1;
+}
+
+.edit-field label {
   display: block;
-  margin: 10px auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  transition: border-color 0.3s ease;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ww-text-secondary);
+  margin-bottom: 4px;
 }
 
-.file-input:hover {
-  border-color: #4CAF50;
+/* Details Card */
+.details-card {
+  padding: 24px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ww-border);
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f2ef;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ww-blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ww-blue);
+  font-size: 14px;
+}
+
+.detail-content {
+  flex: 1;
+}
+
+.detail-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ww-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.detail-value {
+  display: block;
+  font-size: 14px;
+  color: var(--ww-text-primary);
+}
+
+.date-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.date-edit-row .ww-input {
+  flex: 1;
+}
+
+/* CV Card */
+.cv-card {
+  padding: 24px;
+}
+
+.cv-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.cv-uploaded {
+  background: var(--ww-green-light);
+  color: var(--ww-green);
+}
+
+.cv-uploaded i:first-child {
+  font-size: 24px;
+}
+
+.cv-empty {
+  background: #f9f9f9;
+  color: var(--ww-text-secondary);
 }
 
 .cv-download-link {
-  color: #007BFF;
-  text-decoration: underline;
+  margin-left: auto;
+  color: var(--ww-blue);
   cursor: pointer;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .cv-download-link:hover {
-  color: #0056b3;
+  text-decoration: underline;
+}
+
+.cv-upload-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.file-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px;
+  border: 1px solid var(--ww-border);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .profile-header-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    margin-top: -60px;
+  }
+
+  .profile-header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .edit-field-row {
+    flex-direction: column;
+  }
 }

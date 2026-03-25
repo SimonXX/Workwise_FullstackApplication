@@ -10,8 +10,6 @@ import com.workwise.workwisebackend.repositories.modelDTO.UserInformationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,9 +76,7 @@ public class UserService {
         existsUser.setDateOfBirth(userDTO.getDateOfBirth());
         existsUser.setCv(userDTO.getCvBase64());
 
-        System.out.println(Arrays.toString(Base64.getDecoder().decode(userDTO.getCvBase64())));
 
-        // Salva l'utente aggiornato nel database
         return UserMapper.mapUserToUserDTO(userRepository.save(existsUser));
     }
 

@@ -1,9 +1,11 @@
-<!-- alert-dialog.component.html -->
-
-<h1 mat-dialog-title>{{ data.title }}</h1>
-<div mat-dialog-content>
+<h2 mat-dialog-title class="dialog-title">
+  <i class="fas fa-check-circle dialog-success-icon" *ngIf="data.title === 'Success'"></i>
+  <i class="fas fa-exclamation-circle dialog-error-icon" *ngIf="data.title !== 'Success'"></i>
+  {{ data.title }}
+</h2>
+<div mat-dialog-content class="dialog-content">
   <p>{{ data.message }}</p>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onClose()">OK</button>
+<div mat-dialog-actions class="dialog-actions" align="end">
+  <button mat-raised-button color="primary" (click)="onClose()" class="dialog-ok-btn">OK</button>
 </div>

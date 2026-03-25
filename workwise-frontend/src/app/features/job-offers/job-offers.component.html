@@ -1,66 +1,82 @@
 <div class="job-offers-container">
-  <h1 *ngIf="role === 'CANDIDATE'" class="page-title">Explore All Available Job Offers</h1>
-  <h1 *ngIf="role === 'COMPANY'" class="page-title">Your Job Offers</h1>
+  <div class="section-header ww-card">
+    <h2 *ngIf="role === 'CANDIDATE'"><i class="fas fa-search"></i> Explore Job Offers</h2>
+    <h2 *ngIf="role === 'COMPANY'"><i class="fas fa-briefcase"></i> Your Job Offers</h2>
 
-  <div class="search-container">
-    <!-- Barra di ricerca e dropdown -->
-    <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="applySearch()" class="search-bar" />
-    <span class="clear-search-icon" *ngIf="searchText" (click)="clearSearchText()">
-      <mat-icon>highlight_off</mat-icon>
-    </span>
-    <select [(ngModel)]="filterCriteria" class="filter-dropdown" (change)="applySearch()">
-      <option value="id">ID</option>
-      <option value="title">Title</option>
-      <option value="location">Location</option>
-      <option *ngIf="role === 'CANDIDATE'" value="company">Company</option>
-    </select>
-
-    <!-- Pulsante "+" per aggiungere una nuova job offer -->
-    <ng-container *ngIf="role === 'COMPANY'">
-      <button class="add-offer-button" (click)="openAddJobOfferDialog()">
-        +
+    <div class="search-bar-wrapper">
+      <div class="search-input-group">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="applySearch()" class="ww-input search-input">
+        <span class="clear-icon" *ngIf="searchText" (click)="clearSearchText()">
+          <i class="fas fa-times-circle"></i>
+        </span>
+      </div>
+      <select [(ngModel)]="filterCriteria" class="filter-select" (change)="applySearch()">
+        <option value="id">ID</option>
+        <option value="title">Title</option>
+        <option value="location">Location</option>
+        <option *ngIf="role === 'CANDIDATE'" value="company">Company</option>
+      </select>
+      <button *ngIf="role === 'COMPANY'" class="ww-btn-primary add-btn" (click)="openAddJobOfferDialog()">
+        <i class="fas fa-plus"></i> New Offer
       </button>
-    </ng-container>
+    </div>
   </div>
 
-  <!-- Lista delle job offers -->
   <ng-container *ngIf="filteredJobOffers.length > 0; else noJobOffers">
-    <ul class="job-offers-list">
-      <li *ngFor="let jobOffer of filteredJobOffers" class="job-offer-item">
-        <div class="job-offer">
-          <div class="job-offer-id">#{{ jobOffer.id }}</div>
-          <h2 class="job-offer-title">{{ jobOffer.title }}</h2>
-          <p class="job-offer-description">{{ jobOffer.description }}</p>
-          <p class="job-offer-location">Location: {{ jobOffer.location }}</p>
-          <p class="job-offer-company">
-            <strong>Company:</strong> {{ jobOffer.company.name }}
-          </p>          <p class="job-offer-posted">Posted on: {{ jobOffer.posteddate | date }}</p>
-          <p class="job-offer-expires">Expires on: {{ jobOffer.expirydate | date }}</p>
-
-          <!-- Azioni in base al ruolo -->
-          <div class="actions-container">
-            <ng-container *ngIf="role === 'CANDIDATE'">
-              <button class="apply-button" (click)="applyJobOffer(jobOffer.id)">Apply</button>
-            </ng-container>
-            <ng-container *ngIf="role === 'COMPANY'">
-              <button class="edit-button" (click)="openEditJobOffer(jobOffer.id)">Edit</button>
-              <button class="delete-button" (click)="deleteJobOffer(jobOffer.id)">Delete</button>
-            </ng-container>
-          </div>
+    <div *ngFor="let jobOffer of filteredJobOffers" class="job-card ww-card">
+      <div class="job-card-header">
+        <div class="job-card-icon">
+          <i class="fas fa-briefcase"></i>
         </div>
-      </li>
-    </ul>
+        <div class="job-card-meta">
+          <h3 class="job-title">{{ jobOffer.title }}</h3>
+          <p class="job-company">{{ jobOffer.company.name }}</p>
+          <p class="job-location"><i class="fas fa-map-marker-alt"></i> {{ jobOffer.location }}</p>
+        </div>
+        <span class="job-id">#{{ jobOffer.id }}</span>
+      </div>
 
-    <!-- Paginazione -->
+      <p class="job-description">{{ jobOffer.description }}</p>
+
+      <div class="job-card-footer">
+        <div class="job-dates">
+          <span><i class="fas fa-calendar-alt"></i> Posted: {{ jobOffer.posteddate | date:'mediumDate' }}</span>
+          <span><i class="fas fa-clock"></i> Expires: {{ jobOffer.expirydate | date:'mediumDate' }}</span>
+        </div>
+        <div class="job-actions">
+          <ng-container *ngIf="role === 'CANDIDATE'">
+            <button class="ww-btn-primary" (click)="applyJobOffer(jobOffer.id)">
+              <i class="fas fa-paper-plane"></i> Apply
+            </button>
+          </ng-container>
+          <ng-container *ngIf="role === 'COMPANY'">
+            <button class="ww-btn-outline" (click)="openEditJobOffer(jobOffer.id)">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="ww-btn-danger" (click)="deleteJobOffer(jobOffer.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
     <div class="pagination">
-      <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
-      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+      <button class="ww-btn-outline pagination-btn" (click)="previousPage()" [disabled]="currentPage === 0">
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+      <span class="page-info">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      <button class="ww-btn-outline pagination-btn" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
   </ng-container>
 
-  <!-- Nessuna offerta di lavoro disponibile -->
   <ng-template #noJobOffers>
-    <p>No Job Offers Available</p>
+    <div class="empty-state ww-card">
+      <i class="fas fa-inbox empty-icon"></i>
+      <p>No job offers available at the moment.</p>
+    </div>
   </ng-template>
 </div>

@@ -1,48 +1,39 @@
-/* Stile per il dialogo di aggiunta offerta di lavoro */
-h1.mat-dialog-title {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-mat-form-field {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-textarea.mat-input-element {
-  min-height: 100px; /* Altezza minima per il campo descrizione */
-}
-
-.date-picker-container {
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ww-text-primary);
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.dialog-title-icon {
+  color: var(--ww-blue);
+}
+
+.dialog-content {
+  padding-top: 8px;
+}
+
+.dialog-field {
   width: 100%;
+  margin-bottom: 8px;
 }
 
-.mat-datepicker-toggle {
-  margin-left: 8px;
-  cursor: pointer;
+.dialog-actions {
+  padding-top: 8px;
 }
 
-.mat-dialog-content {
-  max-width: 600px; /* Larghezza massima del contenuto del dialogo */
+.dialog-cancel {
+  color: var(--ww-text-muted) !important;
 }
 
-.mat-dialog-actions {
-  justify-content: flex-end;
-  margin-top: 24px;
+.dialog-save {
+  background-color: var(--ww-blue) !important;
+  color: var(--ww-white) !important;
+  border-radius: 24px !important;
 }
 
-/* Stile per i bottoni nel dialogo */
-button.mat-button {
-  margin-left: 8px;
-}
-
-button.mat-button:last-child {
-  margin-left: 0;
-}
-
-button.mat-button[disabled] {
+.dialog-save[disabled] {
   opacity: 0.5;
-  cursor: not-allowed;
 }

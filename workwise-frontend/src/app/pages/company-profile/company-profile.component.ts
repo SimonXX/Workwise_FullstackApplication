@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {Company, CompanyImpl} from "../../core/models/company.model";
-import {CompanyProfileService} from "./services/company-profile.service";
-import {Router} from "@angular/router";
-import {NgIf} from "@angular/common";
-import {AuthService} from "../../core/services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Company, CompanyImpl } from '../../core/models/company.model';
+import { CompanyProfileService } from './services/company-profile.service';
+import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -17,15 +17,17 @@ import {AuthService} from "../../core/services/auth.service";
   styleUrl: './company-profile.component.css'
 })
 export class CompanyProfileComponent implements OnInit {
-
   company: Company;
-  editedCompany: Company; // Use Company type for editedCompany
+  editedCompany: Company;
+  editingMode = false;
+  email: string = localStorage.getItem('email') || '';
 
-  editingMode = false; // Variable to handle editing state
-  email: String = localStorage.getItem('email') || '';
-
-  constructor(private router: Router, private authService: AuthService, private companyProfileService: CompanyProfileService) {
-    this.company = new CompanyImpl(); // Initialize company with CompanyImpl instance
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private companyProfileService: CompanyProfileService
+  ) {
+    this.company = new CompanyImpl();
     this.editedCompany = new CompanyImpl();
   }
 
@@ -33,72 +35,50 @@ export class CompanyProfileComponent implements OnInit {
     this.loadMyCompany();
   }
 
-  loadMyCompany(): void{
-    const observer = {
+  loadMyCompany(): void {
+    this.companyProfileService.getCompanyInformation(this.email).subscribe({
       next: (response: any) => {
-        this.company = response; // Assegna la risposta all'oggetto user
-        this.editedCompany = response;
-       // this.editedCompany = response;
-        console.log(this.company);
-      },
-      error: (error: any) => {
-        console.error('Error loading Company Information', error);
+        this.company = response;
+        this.editedCompany = { ...response };
       }
-    };
-    this.companyProfileService.getCompanyInformation(this.email).subscribe(observer);
+    });
   }
 
   goToCompanyArea(): void {
-    this.router.navigate(['/companyArea']); // Navigate to company area
+    this.router.navigate(['/companyArea']);
   }
 
-  editProfile() {
+  editProfile(): void {
     this.editingMode = true;
-    console.log(this.editedCompany);
   }
 
-  saveChanges() {
-    console.log(this.editedCompany); // Log edited company data
-    console.log(this.company);
-
-    const observer = {
+  saveChanges(): void {
+    this.companyProfileService.updateCompanyInformation(this.editedCompany).subscribe({
       next: (response: any) => {
-        this.company = response; // Assegna la risposta all'oggetto user
-        // this.editedCompany = response;
-        console.log(this.company);
-      },
-      error: (error: any) => {
-        console.error('Error loading Modify Company Information', error);
+        this.company = response;
       }
-    };
-    this.companyProfileService.updateCompanyInformation(this.editedCompany).subscribe(observer);
+    });
     this.editingMode = false;
   }
 
-  cancelEditing() {
-    this.editingMode = false; // Cancel editing mode
-    this.editedCompany = this.company;
+  cancelEditing(): void {
+    this.editingMode = false;
     this.loadMyCompany();
   }
 
-  onKeyDown(event: KeyboardEvent) {
-    // Handle keyboard events
+  onKeyDown(event: KeyboardEvent): boolean {
+    if (
+      (event.key >= '0' && event.key <= '9') ||
+      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)
+    ) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
   }
 
   logout(): void {
-    this.authService.logout(); // Logout user
-  }
-
-  calculateProgress(value: string): string {
-    // Supponiamo che la lunghezza massima del campo sia 50
-    const maxLength = 50;
-
-    if (value) {
-      const length = value.length;
-      const progress = (length / maxLength) * 100;
-      return progress + '%';
-    } else {
-      return '0%';
-    }
+    this.authService.logout();
   }
 }
