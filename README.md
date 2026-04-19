@@ -5,7 +5,7 @@ A modern, full-stack job platform inspired by LinkedIn — connecting candidates
 Built as a portfolio project to demonstrate expertise in **Angular**, **Spring Boot**, **PostgreSQL**, and **Docker**.
 
 <img width="1280" height="720" alt="Image" src="https://github.com/user-attachments/assets/8b1f8cda-9f00-44e6-99b5-3efa3fea7a54" />
----
+
 
 ## Key Features
 
